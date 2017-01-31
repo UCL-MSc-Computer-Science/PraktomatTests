@@ -59,7 +59,7 @@ public class LinearLUTM2FTest2 {
 			check("Value 1:1, ", myLut);
 			myLut.remove("Value 10");
 		} catch (LUTKeyException lke) {
-			System.out.println(lke);
+			System.out.println(lke + " - this should happen");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
