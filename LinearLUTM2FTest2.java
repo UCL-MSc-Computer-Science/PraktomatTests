@@ -1,7 +1,8 @@
 
 public class LinearLUTM2FTest2 {
 	
-	static boolean noTestsFailed = true;
+	static int testsPassed = 0;
+	static int totalTests = 0;
 
 	public static void main(String[] args) {
 
@@ -141,7 +142,7 @@ public class LinearLUTM2FTest2 {
 		// Because who doesn't love a good speed test
 		LinearLUTM2F<Integer> speed = new LinearLUTM2F<Integer>();
 		int noOfItems = 10000;
-		System.out.println("Testing with " + noOfItems + " items.");
+		System.out.println(testNo++ + ": Testing with " + noOfItems + " items.");
 		long start = System.nanoTime();
 		for (Integer i = 0 ; i < noOfItems ; i++) {
 			try {
@@ -178,31 +179,33 @@ public class LinearLUTM2FTest2 {
 		
 		if (ratio > 1) {
 			System.out.println("That looks right.");
+			testsPassed++;
 		} else {
 			System.out.println("That looks wrong.");
-			noTestsFailed = false;
 		}
+		totalTests++;
 		
 		System.out.println(sep);
-		if (noTestsFailed) {
+		if (testsPassed == totalTests) {
 			System.out.print("Great job, " +
 					System.getProperty("user.name") + 
 					"! Looks like you got everything right.");
 		} else {
 			System.out.println("You can do better than that, " + 
-					System.getProperty("user.name") + ".");
+					System.getProperty("user.name") + ".\n" +
+					testsPassed + "/" + totalTests + " tests passed.");
 		}
 
 	}
 	
 	private static void check(String expected, LinearLUTM2F<Integer> lut) {
-		boolean correct = lut.toString().equals(expected);
+		totalTests++;
 		if (lut.toString().equals(expected)) {
 			System.out.println("That looks right.");
+			testsPassed++;
 		} else {
 			System.out.println("That doesn't look right");
 		}
-		noTestsFailed = noTestsFailed && correct;
 	}
 
 }
