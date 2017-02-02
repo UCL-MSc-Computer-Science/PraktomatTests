@@ -22,7 +22,7 @@ public class LinearLUTM2FTest4 {
     @Test (expected = LUTKeyException.class)
     public void invalidRemovalFromLUT() throws LUTKeyException{
         myLut = new LinearLUTM2F<Integer>();
-
+        addToLUTMany(1);
         assertEquals("Value 1:1, ", myLut.toString());
         myLut.remove("Value 10");
         fail("Invalid removal did not fail");
@@ -60,6 +60,7 @@ public class LinearLUTM2FTest4 {
 
         try{
             addToLUTMany(1,0);
+            
             myLut.remove("Value 0");
             assertEquals("Value 1:1, ", myLut.toString());
         }
@@ -73,9 +74,9 @@ public class LinearLUTM2FTest4 {
         myLut = new LinearLUTM2F<Integer>();
 
         try{
-            addToLUTMany(5,4,3,2,1);
+            addToLUTMany(1,2,3,4,5);
 
-            myLut.retrieve("Value 2");
+            assertEquals(myLut.retrieve("Value 2"), new Integer(2));
             assertEquals("Value 2:2, Value 5:5, Value 4:4, Value 3:3, Value 1:1, ", myLut.toString());
         }
         catch (Exception e){
@@ -87,6 +88,7 @@ public class LinearLUTM2FTest4 {
     public void invalidRetrievalFromLUT() throws LUTKeyException{
         myLut = new LinearLUTM2F<Integer>();
         addToLUTMany(1,3,4,5,2);
+        
         myLut.retrieve("Value 10");
         fail("Invalid retrieval did not fail");
     }
