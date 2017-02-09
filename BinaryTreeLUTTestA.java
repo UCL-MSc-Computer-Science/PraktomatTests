@@ -7,12 +7,18 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 
+//import BinaryTreeLUT.BSTreeNode; 
+
+
 /*Generates a tree full of randomly chosen String keys and then deletes them in a random order.
  *Number of nodes and max length of key can be changed by changing the parameters of the generateNames function
  *I reckon deleting nodes randomly from several different sized trees should throw up any errors with the new delete method
  *You'll need to have ensured the delete method throws a LUTKeyException if the key to delete can't be found, otherwise you won't know anything is wrong
  *At the moment this needs the printLevelOrder() (brints breadth first) to be defined in your BinaryTreeLUT, which is included in BinaryTreeLUT_Printable
  *Or you could just remove that line and use you own print method */
+/*Added lookForDuplicates() method to BinaryTreeLUT, couldn't add it to test files because importing inner BSTreeNode class wouldn't work
+ *  So if you want to use it you have to add the appropriate methods (which are in BinaryTreeLUT_Printable) to your BinaryTreeLUT class.
+ *  You should probably then delete them again before you hand in.*/
 public class BinaryTreeLUTTestA {
     public static void main(String[] args) {
         try {
@@ -25,7 +31,7 @@ public class BinaryTreeLUTTestA {
             //Either load names from previous session
             /*ArrayList<String> names = load("names.bin");*/
             //Or generate list of random names. First parameter is number of names to generate, second is max name length
-            ArrayList<String> names = generateNames(1, 7);
+            ArrayList<String> names = generateNames(40, 7);
             //Save the names list automatically so that it can be reloaded next session if you want to rerun the same tree twice
             save(names, "names.bin");
             
@@ -45,16 +51,35 @@ public class BinaryTreeLUTTestA {
     			System.out.println("Removing " + key);
     			//Remove from LUT and from names list 
     			myLUT.remove(key);
+    			////////////////////CHECK FOR DUPLICATES//////////////////
+    			/////////////////////////////////////////////////////////
+    			//UnComment this out if you have added lookForDuplicates() method to BinaryTreeLUT
+    			/*if(myLUT.lookForDuplicates()){
+    				System.out.println("Duplicate key. This is bad.");
+    			}
+    			else
+    			{
+    				System.out.println("Removed " + key + " successfully without leaving duplicates.");
+    			}*/
+    			//////////////////////////////////////////////////////////
+    			//////////////////////////////////////////////////////////	
     			names.remove(index);
     			//Print tree after deletion
     			System.out.println(myLUT);
     			myLUT.printLevelOrder(); 
     		}
             System.out.println(myLUT);
+            if(myLUT.root == null){
+            	System.out.println("The tree is empty. (i.e. the root is null)");
+            }
+            else{
+            	System.out.println("root != null. Things are not as they should be.");
+            }
         } catch (Exception e) {
         	e.printStackTrace();
         }
     }
+    
     
     /////////////////////////////////////////////SAVE AND LOAD METHODS TO REDO SPECIFIC TREE /////////////////////////////////////////////
     
@@ -111,7 +136,7 @@ public class BinaryTreeLUTTestA {
 		for(int i = 0; i<noOfNames; i++)
 		{
 			//Generate a pseudo random name with length between 1 and (maxLengthOfNames +1)
-			String newName = generateString(rand.nextInt(maxLengthOfNames) + 1);
+			String newName = generateString(rand.nextInt(maxLengthOfNames - 1) + 1);
 			//If name already in list, decrement i, i.e. repeat
 			if(inList(names, newName)){
 				i--;
@@ -128,7 +153,7 @@ public class BinaryTreeLUTTestA {
 	{
 		Random rand = new Random();
 		//List of possible chars
-		String characters = "abcdefghijklmnoqrtsuvwxyz";
+		String characters = "abcdefghijklmnopqrtsuvwxyz";
 		//Char array for storing String
 		char[] text = new char[length];
 		for(int i = 0; i<length; i++){
@@ -137,4 +162,6 @@ public class BinaryTreeLUTTestA {
 		}
 		return new String(text);
 	}
+
+	
 }

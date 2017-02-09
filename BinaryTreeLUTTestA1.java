@@ -7,7 +7,6 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 /*Repeats BinaryTreeLUTTestA for 2000 different trees where each tree has a random number of nodes between 0 and 50 
  * All but one print statement has been commented out, because it would be unreadable
  * If it reaches finished without any problems, It probably works.
@@ -17,6 +16,9 @@ import java.util.Random;
  * Consequently with noOfNodes at 50 I have set a minimum maxLength of 3 (i.e. 26**3)*/
 /*Second half generates a unbalanced tree (i.e. very tall) and then deletes randomly from that
  * as all the random trees in the first half are very unlikely to be skew, so I thought I'd test that too.*/
+/*Added lookForDuplicates() method to BinaryTreeLUT, couldn't add it to test files because importing inner BSTreeNode class wouldn't work
+ *  So if you want to use it you have to add the appropriate methods (which are in BinaryTreeLUT_Printable) to your BinaryTreeLUT class.
+ *  You should probably then delete them again before you hand in.*/
 public class BinaryTreeLUTTestA1 
 {
     public static void main(String[] args) 
@@ -47,7 +49,7 @@ public class BinaryTreeLUTTestA1
 	    			myLUT.insert(names.get(i), new Integer(15));
 	    		}
 	    		//Print intial Tree
-	    		System.out.println(myLUT);
+	    		//System.out.println(myLUT);
 	    		//Print tree breadth first, shows which nodes are on which level, but not the connections between the nodes
 	    		//myLUT.printLevelOrder(); 
 	    		//Go through LUT removing nodes with the keys randomly chosen from the names list
@@ -58,12 +60,28 @@ public class BinaryTreeLUTTestA1
 	    			//System.out.println("Removing " + key);
 	    			//Remove from LUT and from names list 
 	    			myLUT.remove(key);
+	    			////////////////////CHECK FOR DUPLICATES//////////////////
+	    			/////////////////////////////////////////////////////////
+	    			//Comment this out if you have added lookForDuplicates() method to BinaryTreeLUT
+	    			/*if(j%50 == 0){
+	    				if(myLUT.lookForDuplicates()){
+		    				System.out.println("Duplicate key. This is bad.");
+		    			}
+		    			else
+		    			{
+		    				//System.out.println("Removed " + key + " successfully without leaving duplicates.");
+		    			}
+	    			}*/
+	    			//////////////////////////////////////////////////////////
+	    			//////////////////////////////////////////////////////////	
 	    			names.remove(index);
 	    			//Print tree after deletion
 	    			//System.out.println(myLUT);
 	    			//myLUT.printLevelOrder(); 
 	    		}
-	            //System.out.println(myLUT);
+	            if(myLUT.root != null){
+	            	throw new Exception("myLUT.root !=null i.e. the tree is non-empty, thiss not right.");
+	            }
 	        } catch (Exception e) {
 	        	e.printStackTrace();
 	        }
@@ -94,6 +112,18 @@ public class BinaryTreeLUTTestA1
 	       			System.out.println("Removing " + key);
 	       			//Remove from LUT and from orderedNames list 
 	       			myLUT.remove(key);
+	       			//////////////////CHECK FOR DUPLICATES//////////////////
+	       			////////////////////////////////////////////////////////
+	       			//UnComment this out if you have added lookForDuplicates() method to BinaryTreeLUT
+	       			/*if(myLUT.lookForDuplicates()){
+	    				System.out.println("Duplicate key. This is bad.");
+	    			}
+	    			else
+	    			{
+	    				System.out.println("Removed " + key + " successfully without leaving duplicates.");
+	    			}*/
+	       			///////////////////////////////////////////////////////
+	       			///////////////////////////////////////////////////////
 	       			orderedNames.remove(index);
 	       			//Print tree after deletion
 	       			myLUT.printLevelOrder(); 

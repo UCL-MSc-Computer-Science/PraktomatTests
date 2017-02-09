@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.LinkedList;
 
 
@@ -319,5 +320,60 @@ public class BinaryTreeLUT_Printable<E> implements LUT<E> {
 				nextLevel = new LinkedList<BSTreeNode>(); //Point nextLevel to a empty List (do not use clear, as this would clear firstLevel)
 			}
 		}
+    }
+    
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////Methods to check for duplicate entries in a Binary tree///////////////////////////////////////
+    public boolean lookForDuplicates() throws Exception
+    {
+    	boolean duplicates = false;
+    	if(root == null)
+    	{
+    		//Do nothing, empty list has no duplicates
+    	}
+    	else
+    	{
+    		//Put all nodes in linked list
+        	LinkedList<BSTreeNode> allNodes = traverseToFindDuplicates(root);
+        	//Convert to Array
+        	@SuppressWarnings("unchecked")
+        	BinaryTreeLUT_Printable<E>.BSTreeNode[] allNodesArray = (BinaryTreeLUT_Printable<E>.BSTreeNode[]) allNodes.toArray((BSTreeNode[]) Array.newInstance( new BSTreeNode(null).getClass(), allNodes.size()));
+        	/////////////////////////////////////////////USE THIS VERSION WHEN YOU RENAME CLASS BACK TO BinaryTreeLUT//////////////////////////////////////////////////////////////////////////////
+        	//BinaryTreeLUT<E>.BSTreeNode[] allNodesArray = (BinaryTreeLUT<E>.BSTreeNode[]) allNodes.toArray((BSTreeNode[]) Array.newInstance( new BSTreeNode(null).getClass(), allNodes.size()));
+        	for(int i = 0; i < allNodes.size(); i++)
+        	{
+        		for(int j = i; j < allNodes.size(); j++)
+        		{
+        			//Check all pairs of nodes for duplication 
+        			if( (allNodesArray[i].kvPair.key.equals(allNodesArray[j].kvPair.key)) && (i != j))
+        			{
+        				duplicates = true;
+        				throw new Exception("Duplicate key in tree : " + allNodesArray[i].kvPair.key);
+        			}
+        		}
+        	}
+    	}	
+    	return duplicates;
+    	
+    }
+    
+    public LinkedList<BSTreeNode> traverseToFindDuplicates(BSTreeNode node)
+    {
+    	LinkedList<BSTreeNode> allNodes = new LinkedList<BSTreeNode>();
+    	//Left first traversal, for no particular reason 
+    	//Add nodes to the left of current node, if any exist
+    	if(node.left != null){
+    		//Add lists together
+    		allNodes.addAll(traverseToFindDuplicates(node.left));
+    	}
+    	//Add current node
+    	allNodes.add(node);
+    	//Same with nodes to the right
+    	if(node.right != null)
+    	{
+    		allNodes.addAll(traverseToFindDuplicates(node.right));
+    	}
+    	return allNodes;
     }
 }
