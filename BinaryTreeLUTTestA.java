@@ -42,7 +42,7 @@ public class BinaryTreeLUTTestA {
     		//Print intial Tree
     		System.out.println(myLUT);
     		//Print tree breadth first, shows which nodes are on which level, but not the connections between the nodes
-    		myLUT.printLevelOrder(); 
+//    		myLUT.printLevelOrder(); 
     		//Go through LUT removing nodes with the keys randomly chosen from the names list
     		while(names.size() > 0){
     			//Pick random name/ key to delete
@@ -54,19 +54,19 @@ public class BinaryTreeLUTTestA {
     			////////////////////CHECK FOR DUPLICATES//////////////////
     			/////////////////////////////////////////////////////////
     			//UnComment this out if you have added lookForDuplicates() method to BinaryTreeLUT
-    			/*if(myLUT.lookForDuplicates()){
-    				System.out.println("Duplicate key. This is bad.");
-    			}
-    			else
-    			{
-    				System.out.println("Removed " + key + " successfully without leaving duplicates.");
-    			}*/
+//    			if(myLUT.lookForDuplicates()){
+//    				System.out.println("Duplicate key. This is bad.");
+//    			}
+//    			else
+//    			{
+//    				System.out.println("Removed " + key + " successfully without leaving duplicates.");
+//    			}
     			//////////////////////////////////////////////////////////
     			//////////////////////////////////////////////////////////	
     			names.remove(index);
     			//Print tree after deletion
     			System.out.println(myLUT);
-    			myLUT.printLevelOrder(); 
+//    			myLUT.printLevelOrder(); 
     		}
             System.out.println(myLUT);
             if(myLUT.root == null){
